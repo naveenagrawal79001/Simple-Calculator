@@ -1,0 +1,93 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Calculator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"></link>
+    <style>
+        .calculator {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .calculator-screen {
+            height: 80px;
+            width: 100%;
+            background: #222;
+            color: #fff;
+            text-align: right;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 2rem;
+        }
+        .calculator-keys button {
+            height: 80px;
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="calculator bg-white p-6 rounded-lg shadow-lg">
+        <div class="calculator-screen mb-4" id="screen">0</div>
+        <div class="calculator-keys grid grid-cols-4 gap-4">
+            <button class="bg-gray-200 rounded" onclick="clearScreen()">C</button>
+            <button class="bg-gray-200 rounded" onclick="deleteLast()">DEL</button>
+            <button class="bg-gray-200 rounded" onclick="appendOperator('/')">/</button>
+            <button class="bg-gray-200 rounded" onclick="appendOperator('*')">*</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('7')">7</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('8')">8</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('9')">9</button>
+            <button class="bg-gray-200 rounded" onclick="appendOperator('-')">-</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('4')">4</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('5')">5</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('6')">6</button>
+            <button class="bg-gray-200 rounded" onclick="appendOperator('+')">+</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('1')">1</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('2')">2</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('3')">3</button>
+            <button class="bg-gray-200 rounded row-span-2" onclick="calculateResult()">=</button>
+            <button class="bg-gray-200 rounded col-span-2" onclick="appendNumber('0')">0</button>
+            <button class="bg-gray-200 rounded" onclick="appendNumber('.')">.</button>
+        </div>
+    </div>
+
+    <script>
+        let screen = document.getElementById('screen');
+        let currentInput = '';
+
+        function appendNumber(number) {
+            currentInput += number;
+            screen.textContent = currentInput;
+        }
+
+        function appendOperator(operator) {
+            if (currentInput === '') return;
+            currentInput += operator;
+            screen.textContent = currentInput;
+        }
+
+        function clearScreen() {
+            currentInput = '';
+            screen.textContent = '0';
+        }
+
+        function deleteLast() {
+            currentInput = currentInput.slice(0, -1);
+            screen.textContent = currentInput || '0';
+        }
+
+        function calculateResult() {
+            try {
+                currentInput = eval(currentInput).toString();
+                screen.textContent = currentInput;
+            } catch {
+                screen.textContent = 'Error';
+                currentInput = '';
+            }
+        }
+    </script>
+</body>
+</html>
